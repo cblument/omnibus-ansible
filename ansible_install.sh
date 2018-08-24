@@ -68,7 +68,7 @@ if [ ! "$(which ansible-playbook)" ]; then
 
     # Install passlib for encrypt
     yum -y groupinstall "Development tools"
-    yum -y install python-devel MySQL-python sshpass libffi-devel openssl-devel && pip install pyrax pysphere boto passlib dnspython
+    yum -y install python-devel MySQL-python sshpass libffi-devel openssl-devel && pip install pyrax pysphere boto passlib dnspython -i https://pypi.python.org/simple/
 
     # Install Ansible module dependencies
     yum -y install bzip2 file findutils git gzip hg svn sudo tar which unzip xz zip libselinux-python
@@ -91,12 +91,12 @@ if [ ! "$(which ansible-playbook)" ]; then
       easy_install pip
     fi
     # If python-keyczar apt package does not exist, use pip
-    [ -z "$( apt-cache search python-keyczar )" ] && sudo pip install python-keyczar
+    [ -z "$( apt-cache search python-keyczar )" ] && sudo pip install python-keyczar -i https://pypi.python.org/simple/
 
     # Install passlib for encrypt
     apt_install build-essential
-    # [ X`lsb_release -c | grep trusty | wc -l` = X1 ] && pip install cryptography==2.0.3
-    apt_install python-all-dev python-mysqldb sshpass && pip install pyrax pysphere boto passlib dnspython pyopenssl
+    # [ X`lsb_release -c | grep trusty | wc -l` = X1 ] && pip install cryptography==2.0.3 -i https://pypi.python.org/simple/
+    apt_install python-all-dev python-mysqldb sshpass && pip install pyrax pysphere boto passlib dnspython pyopenssl -i https://pypi.python.org/simple/
 
     # Install Ansible module dependencies
     apt_install bzip2 file findutils git gzip mercurial procps subversion sudo tar debianutils unzip xz-utils zip python-selinux python-boto
@@ -134,13 +134,13 @@ if [ ! "$(which ansible-playbook)" ]; then
     echo 'WARN: Not all functionality of ansible may be available'
   fi
 
-  pip install -q six --upgrade
+  pip install -q six --upgrade -i https://pypi.python.org/simple/
   mkdir -p /etc/ansible/
   printf "%s\n" "[local]" "localhost" > /etc/ansible/hosts
   if [ -z "$ANSIBLE_VERSION" ]; then
-    pip install -q ansible
+    pip install -q ansible -i https://pypi.python.org/simple/
   else
-    pip install -q ansible=="$ANSIBLE_VERSION"
+    pip install -q ansible=="$ANSIBLE_VERSION" -i https://pypi.python.org/simple/
   fi
   if [ -f /etc/centos-release ] || [ -f /etc/redhat-release ] || [ -f /etc/oracle-release ] || [ -f /etc/system-release ]; then
     # Fix for pycrypto pip / yum issue
